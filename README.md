@@ -2,8 +2,6 @@
 
 Overview of Q Architecture
 
-## Frontend
-
 ### Development Framework
 
 Q is using custom-built pipeline around React.js as development framework.
@@ -12,8 +10,7 @@ Q is using custom-built pipeline around React.js as development framework.
 
 **Development**
 
-- Run `yarn run dev` to start dev servers
-  [Live preview](http://localhost:3000/)
+- Run `yarn run dev` to start dev servers [Live preview](http://localhost:3000/)
 
 ---
 
@@ -30,6 +27,10 @@ Q is using custom-built pipeline around React.js as development framework.
 ## prettier & eslint fix
 
 - use `yarn run fix` to let prettier & eslint automatically fix inconsistencies
+
+## jest
+
+-- use `yarn test` to run tests and see results
 
 #### Development Stack
 
