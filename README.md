@@ -10,7 +10,7 @@ Q is using custom-built pipeline around React.js as development framework.
 
 **Development**
 
-- Run `yarn run dev` to start dev servers [Live preview](http://localhost:3000/)
+- Run `yarn run dev` to start dev servers and checkout for [Live preview](http://localhost:3000/)
 
 ---
 
@@ -36,17 +36,20 @@ Q is using custom-built pipeline around React.js as development framework.
 
 - [ReactJs 18.2.0](https://reactjs.org/) (JavaScript ES6+)
 - [Tailwind 3.1.8](https://tailwindcss.com/) (TailwindCSS)
-- [React Testing Library 28.1.3](React Testing Library) (Testing Library)
+- [React Testing Library 28.1.3](https://testing-library.com/) (Testing Library)
 - [Jest 28.1.3](https://jestjs.io/) (Test runner)
 - Bundled with Vite 3.0.0. See the section about [configuration](https://vitejs.dev) for more information.
 
-#### Project kanban board
+#### Trello kanban board
 
- - [Trello kanban board](https://trello.com/b/h25z1PA9/q)
+ - [Board](https://trello.com/b/h25z1PA9/q)
 
 #### Estimate time and Orginal time
-
+  
  - Estimate time: 4 days
  - Orginal time: TODO
+ - Start date: 07.08.2022
+ - Planned end date: 11.08.2022
+ - End date: TODO
 
  Q
