@@ -1,5 +1,6 @@
 import { renderHook, waitFor, act } from '@testing-library/react';
-import useFetch, { BASE_URL, AsyncDataLeaf } from '@app/utils/use-fetch/useFetch';
+import useFetch from '@app/utils/use-fetch/useFetch';
+import AsyncDataLeaf from '@app/utils/use-fetch/asyncDataLeaf';
 import mockAxios from 'jest-mock-axios';
 import mockUsers from '@app/utils/use-fetch/__test__/mockUsers';
 

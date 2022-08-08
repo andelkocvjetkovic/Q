@@ -18,7 +18,6 @@ const Posts = () => {
     ),
     Error: error => <div>Something went wrong! {error.message}</div>,
   });
-  return <div>Posts</div>;
 };
 
 export default Posts;
