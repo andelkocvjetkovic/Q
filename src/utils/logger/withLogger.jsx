@@ -1,11 +1,13 @@
-import PropTypes from 'prop-types';
 import R from 'ramda';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useContext, createContext } from 'react';
 
 export const LOGGER_PROPS_NAME = 'loggerMessage';
+export const LOGGER_MESSAGE = 'Hello from';
+export const LoggerContext = createContext('');
 
-export const useLogger = (message, name) => {
+export const useLogger = name => {
   const isLogged = useRef(false);
+  const message = useContext(LoggerContext);
 
   useEffect(() => {
     // since react 18.+ useEffect runs twice on component mount https://github.com/facebook/react/issues/24502
@@ -31,13 +33,9 @@ export const getLoggerProps = props => ({ [LOGGER_PROPS_NAME]: getLoggerMessage(
 
 const withLogger = Component => {
   const Logger = props => {
-    useLogger(getLoggerMessage(props), getComponentName(Component));
+    useLogger(getComponentName(Component));
 
     return <Component {...props} />;
-  };
-
-  Logger.propTypes = {
-    [LOGGER_PROPS_NAME]: PropTypes.string.isRequired,
   };
 
   Logger.displayName = `WithLogger(${getComponentName(Component)})`;
