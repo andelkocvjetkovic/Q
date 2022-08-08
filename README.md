@@ -34,11 +34,11 @@ Q is using custom-built pipeline around React.js as development framework.
 
 #### Development Stack
 
-- [ReactJs 18.2.0](https://reactjs.org/) (JavaScript ES6+)
-- [Tailwind 3.1.8](https://tailwindcss.com/) (TailwindCSS)
-- [React Testing Library 28.1.3](https://testing-library.com/) (Testing Library)
-- [Jest 28.1.3](https://jestjs.io/) (Test runner)
-- Bundled with Vite 3.0.0. See the section about [configuration](https://vitejs.dev) for more information.
+- [ReactJs 18.+](https://reactjs.org/) (JavaScript ES6+)
+- [Tailwind 3.+](https://tailwindcss.com/) (TailwindCSS)
+- [React Testing Library 28.+](https://testing-library.com/) (Testing Library)
+- [Jest 28.+](https://jestjs.io/) (Test runner)
+- Bundled with Vite 3.+. See the section about [configuration](https://vitejs.dev) for more information.
 
 #### Trello kanban board
 
