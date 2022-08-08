@@ -1,4 +1,5 @@
 let path = require('path');
+
 module.exports = {
   extends: [
     'eslint:recommended',
@@ -21,7 +22,7 @@ module.exports = {
     },
   },
   rules: {
-    'react/prop-types': 'warn',
+    'react/prop-types': ['error', { ignore: ['children'] }],
     'react/react-in-jsx-scope': 'off',
     /*'no-console': ['warn', { allow: ['error'] }],*/
   },

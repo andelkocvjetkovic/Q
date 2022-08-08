@@ -16,8 +16,11 @@
     "test": "yarn run jest -env=jsdom"
   },
   "dependencies": {
+    "@babel/core": "7.18.10",
     "autoprefixer": "10.4.8",
     "postcss": "8.4.16",
+    "prop-types": "^15.8.1",
+    "ramda": "0.28.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.1.8"
