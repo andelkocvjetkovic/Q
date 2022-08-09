@@ -5,7 +5,7 @@ import MainLayout from '@app/components/main-layout/MainLayout';
 import { UserContext } from '@app/utils/use-fetch/useUsers';
 import useFetch from '@app/utils/use-fetch/useFetch';
 
-const PostsLazy = lazy(() => import('@app/pages/Posts'));
+const PostsLazy = lazy(() => import('@app/pages/posts/Posts'));
 const PostLazy = lazy(() => import('@app/pages/Post'));
 
 const App = props => {
