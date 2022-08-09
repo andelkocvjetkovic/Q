@@ -11,7 +11,7 @@ const useFetch = uri => {
       .map(prop('data'))
       .run()
       .listen({
-        onCancelled: () => setAsyncData(AsyncDataLeaf.Success([])),
+        onCancelled: () => null, // TODO handle canceled fetch
         onResolved: b => setAsyncData(AsyncDataLeaf.Success(b)),
         onRejected: a => setAsyncData(AsyncDataLeaf.Error(a)),
       });

@@ -1,18 +1,28 @@
 import usePosts from '@app/utils/use-fetch/usePosts';
+import { getLoggerProps } from '@app/utils/logger/withLogger';
+import PostCard from '@app/components/post-card/PostCard';
+import { prop } from 'ramda';
 
-const Posts = () => {
+const propId = prop('id');
+const propTitle = prop('title');
+const propBody = prop('body');
+const propUserId = prop('userId');
+
+const Posts = props => {
   const posts = usePosts();
-  console.log(posts.toString());
   return posts.cata({
     Loading: () => <div>Loading ...</div>,
     Success: data => (
       <div className='grid grid-cols-2 gap-4'>
         {data.map(p => (
-          <div key={p.id}>
-            <div>{p.title}</div>
-            <div>{p.userId}</div>
-            <div>{p.body}</div>
-          </div>
+          <PostCard
+            key={propId(p)}
+            id={propId(p)}
+            title={propTitle(p)}
+            body={propBody(p)}
+            userId={propUserId(p)}
+            {...getLoggerProps(props)}
+          />
         ))}
       </div>
     ),
