@@ -5,7 +5,7 @@ const SearchBar = ({ name, label, value, onChange }) => {
   return (
     <div>
       <label htmlFor={name}>{label}</label>
-      <input type='search' name={name} value={value} onChange={onChange} />
+      <input type='search' name={name} id={name} value={value} onChange={onChange} />
     </div>
   );
 };
