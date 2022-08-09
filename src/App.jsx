@@ -6,6 +6,7 @@ import { UserContext } from '@app/utils/use-fetch/useUsers';
 import useFetch from '@app/utils/use-fetch/useFetch';
 
 const PostsLazy = lazy(() => import('@app/pages/Posts'));
+const PostLazy = lazy(() => import('@app/pages/Post'));
 
 const App = props => {
   const users = useFetch('/users');
@@ -16,6 +17,7 @@ const App = props => {
         <Route path='/' element={<Navigate to='/posts' />} />
         <Route path='posts' element={<MainLayout {...getLoggerProps(props)} />}>
           <Route index element={<PostsLazy {...getLoggerProps(props)} />} />
+          <Route path=':postId' element={<PostLazy {...getLoggerProps(props)} />} />
         </Route>
       </Routes>
     </UserContext.Provider>

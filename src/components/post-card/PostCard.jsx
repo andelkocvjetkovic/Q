@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import withLogger, { getLoggerProps } from '@app/utils/logger/withLogger';
-import UserFullName from '@app/components/user/UserFullName';
+import UserFullName from '@app/components/user-full-name/UserFullName';
 
 const PostCard = ({ id, title, body, userId, ...rest }) => (
   <Link to={`${id}`}>

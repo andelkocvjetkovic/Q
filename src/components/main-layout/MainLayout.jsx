@@ -1,8 +1,11 @@
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import withLogger from '@app/utils/logger/withLogger';
 const MainLayout = () => (
   <main>
-    <Outlet />
+    <Suspense fallback={<div>Loading ...</div>}>
+      <Outlet />
+    </Suspense>
   </main>
 );
 
