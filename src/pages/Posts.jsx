@@ -1,12 +1,7 @@
 import usePosts from '@app/utils/use-fetch/usePosts';
 import { getLoggerProps } from '@app/utils/logger/withLogger';
 import PostCard from '@app/components/post-card/PostCard';
-import { prop } from 'ramda';
-
-const propId = prop('id');
-const propTitle = prop('title');
-const propBody = prop('body');
-const propUserId = prop('userId');
+import { propId, propTitle, propBody, propUserId } from '@app/utils/props';
 
 const Posts = props => {
   const posts = usePosts();
