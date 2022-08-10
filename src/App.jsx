@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import { lazy } from 'react';
 import withLogger, { getLoggerProps } from '@app/utils/logger/withLogger';
 import MainLayout from '@app/components/main-layout/MainLayout';
@@ -22,6 +22,17 @@ const App = props => {
           <Route index element={<PostsLazy {...getLoggerProps(props)} />} />
           <Route path=':postId' element={<PostLazy {...getLoggerProps(props)} />} />
         </Route>
+        <Route
+          path='*'
+          element={
+            <main className='h-screen w-screen flex items-center justify-center'>
+              <div className='d-flex flex-col gap-3'>
+                <h1 className='text-3xl'>There is nothing here!</h1>
+                <Link to='/'>Back to home</Link>
+              </div>
+            </main>
+          }
+        />
       </Routes>
     </UserContext.Provider>
   );
