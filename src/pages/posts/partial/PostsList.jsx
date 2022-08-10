@@ -11,7 +11,7 @@ import { matchSorter } from 'match-sorter';
 
 const PostsList = ({ list, ...rest }) => {
   const [searchUserName, setSearchUserName] = useState('');
-  let [_, setSearchParams] = useSearchParams();
+  let [searchParams, setSearchParams] = useSearchParams();
   const users = useUsers();
   const setUsers = useDebounce(
     userName =>
@@ -28,6 +28,7 @@ const PostsList = ({ list, ...rest }) => {
       }),
     500
   );
+  const isNotFound = searchParams.get('userId') === 'not-found';
 
   return (
     <div>
@@ -41,18 +42,22 @@ const PostsList = ({ list, ...rest }) => {
         }}
         {...getLoggerProps(rest)}
       />
-      <div className='grid grid-cols-2 gap-4'>
-        {list.map(p => (
-          <PostCard
-            key={propId(p)}
-            id={propId(p)}
-            title={propTitle(p)}
-            body={propBody(p)}
-            userId={propUserId(p)}
-            {...getLoggerProps(rest)}
-          />
-        ))}
-      </div>
+      {isNotFound ? (
+        <div>Not result found. Try to refine your query</div>
+      ) : (
+        <div className='grid grid-cols-2 gap-4'>
+          {list.map(p => (
+            <PostCard
+              key={propId(p)}
+              id={propId(p)}
+              title={propTitle(p)}
+              body={propBody(p)}
+              userId={propUserId(p)}
+              {...getLoggerProps(rest)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
