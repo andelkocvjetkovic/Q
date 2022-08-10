@@ -28,6 +28,7 @@ module.exports = {
   },
   env: {
     jest: true,
+    es6: true,
   },
   globals: {
     module: true,

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import R from 'ramda';
+import * as R from 'ramda';
 import { useRef, useEffect } from 'react';
 
 export const LOGGER_PROPS_NAME = 'loggerMessage';
