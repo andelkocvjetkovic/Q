@@ -15,7 +15,7 @@ export default defineConfig({
       '@app': path.resolve(__dirname, './src'),
     },
   },
-  base: '/',
+  base: 'Q',
   server: {
     port: 3000,
   },
