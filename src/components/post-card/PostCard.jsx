@@ -4,6 +4,7 @@ import withLogger, { getLoggerProps } from '@app/utils/logger/withLogger';
 import UserFullName from '@app/components/user-full-name/UserFullName';
 import useComments from '@app/utils/use-fetch/useComments';
 import { propId, propEmail, propBody, propName } from '@app/utils/props';
+import Comment from '@app/components/comment/Comment';
 
 const PostCard = ({ id, title, body, userId, ...rest }) => {
   const comments = useComments(id);
@@ -19,11 +20,7 @@ const PostCard = ({ id, title, body, userId, ...rest }) => {
           <div>
             <div>Comments: </div>
             {c.map(c => (
-              <div key={propId(c)}>
-                <div>Email: {propEmail(c)}</div>
-                <div>Name: {propName(c)}</div>
-                <div>Body: {propBody(c)}</div>
-              </div>
+              <Comment key={propId(c)} name={propName(c)} email={propEmail(c)} body={propBody(c)} {...getLoggerProps(rest)} />
             ))}
           </div>
         ),

@@ -1,4 +1,4 @@
-import { render, act } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import App from '@app/App';
 import { getLoggerProps, LOGGER_PROPS_NAME } from '@app/utils/logger/withLogger';
 import { MemoryRouter } from 'react-router-dom';
