@@ -1,6 +1,5 @@
 import userEvent from '@testing-library/user-event';
 import { render, act, waitFor } from '@testing-library/react';
-import PostsList from '@app/pages/posts/partial/PostsList';
 import Posts from '@app/pages/posts/Posts';
 import { getLoggerProps, LOGGER_PROPS_NAME } from '@app/utils/logger/withLogger';
 import mockPosts from '@app/utils/use-fetch/__test__/mockPosts';
@@ -78,7 +77,7 @@ describe('<PostsList />', () => {
     await waitFor(() => expect(mockAxios.get).toBeCalledWith('/posts?userId=1&userId=8', expect.anything()));
     act(() => mockAxios.mockResponseFor({ url: '/posts?userId=1&userId=8' }, { data: mockPosts }));
   });
-  it.skip('should give no-found result if no match in users list and deleting query will delete query params by userIds', async () => {
+  it('should give no-found result if no match in users list and deleting query will delete query params by userIds', async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
     const { getByLabelText } = render(
       <MemoryRouter initialEntries={['/posts']}>
@@ -87,7 +86,7 @@ describe('<PostsList />', () => {
             path='posts'
             element={
               <UserContext.Provider value={users}>
-                <PostsList list={mockPosts} {...getLoggerProps({ [LOGGER_PROPS_NAME]: 'Hello from' })} />
+                <Posts {...getLoggerProps({ [LOGGER_PROPS_NAME]: 'Hello from' })} />
               </UserContext.Provider>
             }
           />
