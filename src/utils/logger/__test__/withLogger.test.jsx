@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 
 const log = jest.spyOn(console, 'log').mockImplementation(() => {});
 const error = jest.spyOn(console, 'error').mockImplementation(() => {});
+beforeEach(() => {
+  log.mockReset();
+  error.mockReset();
+});
 
 const Foo = () => <div>Foo</div>;
 
@@ -32,10 +36,6 @@ App.propTypes = {
 };
 
 const AppWithLogger = withLogger(App);
-
-beforeEach(() => {
-  log.mockReset();
-});
 
 describe('logger', () => {
   it('Should render withLogger without errors and log in the console', () => {

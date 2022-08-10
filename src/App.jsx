@@ -4,12 +4,15 @@ import withLogger, { getLoggerProps } from '@app/utils/logger/withLogger';
 import MainLayout from '@app/components/main-layout/MainLayout';
 import { UserContext } from '@app/utils/use-fetch/useUsers';
 import useFetch from '@app/utils/use-fetch/useFetch';
+import useScrollTop from '@app/utils/use-scroll-top/useScrollTop';
 
 const PostsLazy = lazy(() => import('@app/pages/posts/Posts'));
 const PostLazy = lazy(() => import('@app/pages/Post'));
 
 const App = props => {
   const users = useFetch('/users');
+
+  useScrollTop();
 
   return (
     <UserContext.Provider value={users}>

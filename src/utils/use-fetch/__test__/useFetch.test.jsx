@@ -15,7 +15,7 @@ describe('useFetch', () => {
   });
   it('should fetch posts data succesfuly', async () => {
     const { result } = renderHook(() => useFetch('/posts'));
-    await waitFor(() => expect(mockAxios.get).toBeCalledTimes(1));
+    await waitFor(() => expect(mockAxios.get).toBeCalledWith('/posts', expect.anything()));
 
     act(() => mockAxios.mockResponse({ data: mockUsers }));
     expect(AsyncDataLeaf.Success.is(result.current)).toBe(true);
@@ -28,7 +28,7 @@ describe('useFetch', () => {
   });
   it('should have error fetch state', async () => {
     const { result } = renderHook(() => useFetch('/posts'));
-    await waitFor(() => expect(mockAxios.get).toBeCalledTimes(1));
+    await waitFor(() => expect(mockAxios.get).toBeCalledWith('/posts', expect.anything()));
 
     act(() => mockAxios.mockError('Something went wrong!'));
     expect(AsyncDataLeaf.Error.is(result.current)).toBe(true);

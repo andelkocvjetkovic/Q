@@ -8,9 +8,7 @@ Q is using custom-built pipeline around React.js as development framework.
 
 #### Local development
 
-**Development**
-
-- Run `yarn run dev` to start dev servers and checkout for [Live preview](http://localhost:3000/)
+- Run `yarn run dev` to start dev servers and checkout for [Live preview](http://127.0.0.1:3000/)
 
 ---
 
@@ -46,10 +44,9 @@ Q is using custom-built pipeline around React.js as development framework.
 
 #### Estimate time and Orginal time
   
- - Estimate time: 4 days
- - Orginal time: TODO
+ - Estimate time: 5 days
+ - Orginal time: 4 days
  - Start date: 07.08.2022
  - Planned end date: 11.08.2022
- - End date: TODO
+ - End date: 10.08.2022
 
- Q
