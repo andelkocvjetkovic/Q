@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import usePosts from '@app/utils/use-fetch/usePosts';
 import PostsList from '@app/pages/posts/partial/PostsList';
 import withLogger, { getLoggerProps } from '@app/utils/logger/withLogger';
