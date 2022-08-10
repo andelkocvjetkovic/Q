@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import * as R from 'ramda';
+import { prop } from 'ramda';
 import { useRef, useEffect } from 'react';
 
 export const LOGGER_PROPS_NAME = 'loggerMessage';
@@ -17,14 +17,14 @@ export const useLogger = (message, name) => {
 };
 
 // getLoggerMessage :: Object -> String
-const getLoggerMessage = R.prop(LOGGER_PROPS_NAME);
+const getLoggerMessage = prop(LOGGER_PROPS_NAME);
 
 // prettier-ignore
 // getComponentName :: Object -> String
 const getComponentName = Component => 
   'displayName' in Component 
-    ? R.prop('displayName', Component)
-    : R.prop('name', Component);
+    ? prop('displayName', Component)
+    : prop('name', Component);
 
 // getLoggerProps :: Object -> {loggerMessage: String}
 export const getLoggerProps = props => ({ [LOGGER_PROPS_NAME]: getLoggerMessage(props) });
