@@ -15,12 +15,12 @@ const UserFullName = ({ userId }) => {
   return userData.cata({
     Loading: () => <div>Loading ...</div>,
     Success: users => (
-      <div>
+      <h4 className='text-xl font-medium text-indigo-500'>
         {findById(userId, users).matchWith({
           Just: ({ value }) => prop('name', value),
           Nothing: () => 'Unknown user',
         })}
-      </div>
+      </h4>
     ),
     Error: () => <div>Something went wrong</div>,
   });

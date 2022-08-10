@@ -51,7 +51,7 @@ describe('<PostsList />', () => {
         </Routes>
       </MemoryRouter>
     );
-    const searchEl = getByLabelText(/search by username/i);
+    const searchEl = getByLabelText(/search by user/i);
     const searchParams = getByTestId('search-params');
 
     await user.click(searchEl);
@@ -93,7 +93,7 @@ describe('<PostsList />', () => {
         </Routes>
       </MemoryRouter>
     );
-    const searchEl = getByLabelText(/search by username/i);
+    const searchEl = getByLabelText(/search by user/i);
     const searchParams = getByTestId('search-params');
 
     await user.click(searchEl);
