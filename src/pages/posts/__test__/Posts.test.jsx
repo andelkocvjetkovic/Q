@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { render, act } from '@testing-library/react';
+import { render, act, waitFor } from '@testing-library/react';
 import PostsList from '@app/pages/posts/partial/PostsList';
 import Posts from '@app/pages/posts/Posts';
 import { getLoggerProps, LOGGER_PROPS_NAME } from '@app/utils/logger/withLogger';
@@ -8,7 +8,7 @@ import mockUsers from '@app/utils/use-fetch/__test__/mockUsers';
 import mockAxios from 'jest-mock-axios';
 import { UserContext } from '@app/utils/use-fetch/useUsers';
 import AsyncDataLeaf from '@app/utils/use-fetch/asyncDataLeaf';
-import { useSearchParams, MemoryRouter, Routes, Route } from 'react-router-dom';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 
 jest.useFakeTimers();
 const log = jest.spyOn(console, 'log').mockImplementation(() => {});
@@ -37,21 +37,15 @@ describe('<PostsList />', () => {
       </MemoryRouter>
     );
   });
-  it('Should be able to query posts and update search params with userIds', async () => {
-    const ShowParams = () => {
-      let [searchParams] = useSearchParams();
-      const userIds = searchParams.getAll('userId');
-      return <div data-testid='search-params'>{JSON.stringify(userIds)}</div>;
-    };
+  it('Should be able to query posts by user fullname', async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
-    const { getByLabelText, getByTestId } = render(
+    const { getByLabelText } = render(
       <MemoryRouter initialEntries={['/posts']}>
         <Routes>
           <Route
             path='posts'
             element={
               <UserContext.Provider value={users}>
-                <ShowParams />
                 <Posts {...getLoggerProps({ [LOGGER_PROPS_NAME]: 'Hello from' })} />
               </UserContext.Provider>
             }
@@ -60,40 +54,39 @@ describe('<PostsList />', () => {
       </MemoryRouter>
     );
     const searchEl = getByLabelText(/search by user/i);
-    const searchParams = getByTestId('search-params');
+
+    await waitFor(() => expect(mockAxios.get).toBeCalledWith('/posts', expect.anything()));
+    act(() => mockAxios.mockResponseFor({ url: '/posts' }, { data: mockPosts }));
 
     await user.click(searchEl);
     await user.keyboard('Leanne');
     act(() => jest.runOnlyPendingTimers());
-    expect(searchParams).toHaveTextContent(JSON.stringify(['1']));
+    await waitFor(() => expect(mockAxios.get).toBeCalledWith('/posts?userId=1', expect.anything()));
+    act(() => mockAxios.mockResponseFor({ url: '/posts?userId=1' }, { data: mockPosts }));
 
     await user.click(searchEl);
     await user.keyboard('{Control>}[KeyA]{/Control}{Backspace}');
     await user.keyboard('DuBuque');
     act(() => jest.runOnlyPendingTimers());
-    expect(searchParams).toHaveTextContent(JSON.stringify(['10']));
+    await waitFor(() => expect(mockAxios.get).toBeCalledWith('/posts?userId=10', expect.anything()));
+    act(() => mockAxios.mockResponseFor({ url: '/posts?userId=10' }, { data: mockPosts }));
 
     await user.click(searchEl);
     await user.keyboard('{Control>}[KeyA]{/Control}{Backspace}');
     await user.keyboard('an');
     act(() => jest.runOnlyPendingTimers());
-    expect(searchParams).toHaveTextContent(JSON.stringify(['1', '8']));
+    await waitFor(() => expect(mockAxios.get).toBeCalledWith('/posts?userId=1&userId=8', expect.anything()));
+    act(() => mockAxios.mockResponseFor({ url: '/posts?userId=1&userId=8' }, { data: mockPosts }));
   });
   it.skip('should give no-found result if no match in users list and deleting query will delete query params by userIds', async () => {
-    const ShowParams = () => {
-      let [searchParams] = useSearchParams();
-      const userId = searchParams.get('userId');
-      return <div data-testid='search-params'>{userId}</div>;
-    };
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
-    const { getByLabelText, getByTestId } = render(
+    const { getByLabelText } = render(
       <MemoryRouter initialEntries={['/posts']}>
         <Routes>
           <Route
             path='posts'
             element={
               <UserContext.Provider value={users}>
-                <ShowParams />
                 <PostsList list={mockPosts} {...getLoggerProps({ [LOGGER_PROPS_NAME]: 'Hello from' })} />
               </UserContext.Provider>
             }
@@ -102,16 +95,20 @@ describe('<PostsList />', () => {
       </MemoryRouter>
     );
     const searchEl = getByLabelText(/search by user/i);
-    const searchParams = getByTestId('search-params');
+
+    await waitFor(() => expect(mockAxios.get).toBeCalledWith('/posts', expect.anything()));
+    act(() => mockAxios.mockResponseFor({ url: '/posts' }, { data: mockPosts }));
 
     await user.click(searchEl);
     await user.keyboard('helloworld');
     act(() => jest.runOnlyPendingTimers());
-    expect(searchParams).toHaveTextContent('not-found');
+    await waitFor(() => expect(mockAxios.get).toBeCalledWith('/posts?userId=not-found', expect.anything()));
+    act(() => mockAxios.mockResponseFor({ url: '/posts?userId=not-found' }, { data: [] }));
 
     await user.click(searchEl);
     await user.keyboard('{Control>}[KeyA]{/Control}{Backspace}');
     act(() => jest.runOnlyPendingTimers());
-    expect(searchParams).toBeEmptyDOMElement('');
+    await waitFor(() => expect(mockAxios.get).toBeCalledWith('/posts', expect.anything()));
+    act(() => mockAxios.mockResponseFor({ url: '/posts' }, { data: mockPosts }));
   });
 });
