@@ -28,7 +28,7 @@ Q is using custom-built pipeline around React.js as development framework.
 
 ## jest
 
--- use `yarn test` to run tests and see results
+- use `yarn test` to run tests and see results
 
 #### Development Stack
 
