@@ -7,6 +7,7 @@ const useFetch = uri => {
   const [asyncData, setAsyncData] = useState(AsyncDataLeaf.Loading);
 
   useEffect(() => {
+    setAsyncData(AsyncDataLeaf.Loading);
     const task = ApiActionTask(uri)
       .map(prop('data'))
       .run()
