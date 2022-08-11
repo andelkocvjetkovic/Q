@@ -11,7 +11,9 @@ const PostsList = ({ list, ...rest }) => {
   return (
     <div>
       {isNotFound ? (
-        <div className='mt-5 text-2xl lg:text-3xl text-indigo-500 text-center'>Not result found. Try to redefine your query</div>
+        <div className='mt-12 text-2xl lg:text-3xl text-indigo-500 text-center'>
+          Not result found. <br /> Try to redefine your query
+        </div>
       ) : (
         <div className='mt-5 grid justify-items-center grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
           {list.map(p => (

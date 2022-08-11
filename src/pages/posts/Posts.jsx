@@ -26,6 +26,7 @@ const Posts = props => {
           else {
             setSearchParams({ userId: [] });
           }
+          window.scrollTo({ top: 0 });
         },
       }),
     500
@@ -33,18 +34,20 @@ const Posts = props => {
 
   return (
     <div>
-      <SearchBar
-        className='w-80 sticky top-0 bg-gray-200 p-2 rounded'
-        value={searchUserName}
-        label='Search by user'
-        name='search-by-username'
-        placeholder='Start typing user first name or last name'
-        onChange={e => {
-          setSearchUserName(e.target.value);
-          setUsers(e.target.value);
-        }}
-        {...getLoggerProps(props)}
-      />
+      <div className='sticky top-0 bg-gray-200 p-2 rounded'>
+        <SearchBar
+          className='max-w-xs w-full'
+          value={searchUserName}
+          label='Search by user'
+          name='search-by-username'
+          placeholder='Start typing user first name or last name'
+          onChange={e => {
+            setSearchUserName(e.target.value);
+            setUsers(e.target.value);
+          }}
+          {...getLoggerProps(props)}
+        />
+      </div>
       {posts.cata({
         Loading: () => <SpinnerFullHeight {...getLoggerProps(props)} />,
         Success: data => <PostsList list={data} {...getLoggerProps(props)} />,

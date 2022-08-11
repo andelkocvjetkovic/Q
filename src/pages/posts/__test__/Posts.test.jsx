@@ -15,6 +15,7 @@ const log = jest.spyOn(console, 'log').mockImplementation(() => {});
 beforeEach(() => {
   log.mockReset();
   mockAxios.reset();
+  window.scrollTo = jest.fn();
 });
 
 const users = AsyncDataLeaf.Success(mockUsers);
