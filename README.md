@@ -8,7 +8,12 @@ Q is using custom-built pipeline around React.js as development framework.
 
 #### Local development
 
-- Run `yarn run dev` to start dev servers and checkout for [Live preview](http://127.0.0.1:3000/)
+- Run `yarn run dev` to start dev servers and checkout for [live preview](http://127.0.0.1:3000/)
+
+#### Build and Preview 
+
+- Run `yarn run build` to build application 
+- Run `yarn run preview` to start a server and checkout for [live preview](http://127.0.0.1:3000/)
 
 ---
 
