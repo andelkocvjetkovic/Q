@@ -1,13 +1,17 @@
-import PropTypes from 'prop-types';
 import withLogger from '@app/utils/logger/withLogger';
 
-const Spinner = ({ size = 16 }) => (
+type Props = {
+  /** size for spinner icon */
+  size?: 16 | 32 | 48;
+};
+
+const Spinner = ({ size = 16 }: Props) => (
   <div role='status'>
     <svg
       width={size}
       height={size}
       aria-hidden='true'
-      className={`mr-2  text-gray-200 animate-spin fill-indigo-500`}
+      className={`mr-2 text-gray-200 animate-spin fill-indigo-500`}
       viewBox='0 0 100 101'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
@@ -25,7 +29,4 @@ const Spinner = ({ size = 16 }) => (
   </div>
 );
 
-Spinner.propTypes = {
-  size: PropTypes.oneOf([16, 32, 48]),
-};
 export default withLogger(Spinner);

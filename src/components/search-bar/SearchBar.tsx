@@ -1,7 +1,17 @@
 import withLogger from '@app/utils/logger/withLogger';
 import PropTypes from 'prop-types';
+import { FormEventHandler } from 'react';
 
-const SearchBar = ({ name, label, value, onChange, className, placeholder }) => {
+type SearchBarPropes = {
+  name: string;
+  label: string;
+  value: string;
+  onChange: FormEventHandler<HTMLInputElement>;
+  placeholder?: string;
+  className?: string;
+};
+
+const SearchBar = ({ name, label, value, onChange, className, placeholder }: SearchBarPropes) => {
   return (
     <div className={className}>
       <label htmlFor={name} className='text-sm text-gray-700'>

@@ -2,9 +2,17 @@ import PropTypes from 'prop-types';
 import { prop } from 'ramda';
 import { useRef, useEffect } from 'react';
 
-export const LOGGER_PROPS_NAME = 'loggerMessage';
+type DisplayName = {
+  displayName: string;
+};
+type Name = {
+  name: string;
+};
 
-export const useLogger = (message, name) => {
+export const LOGGER_PROPS_NAME = 'loggerMessage';
+const LOGGER_MESSAGE = 'Hello from';
+
+export const useLogger = (message: string, name: string): void => {
   const isLogged = useRef(false);
 
   useEffect(() => {
@@ -16,28 +24,18 @@ export const useLogger = (message, name) => {
   }, [name, message]);
 };
 
-// getLoggerMessage :: Object -> String
-const getLoggerMessage = prop(LOGGER_PROPS_NAME);
-
 // prettier-ignore
 // getComponentName :: Object -> String
-const getComponentName = Component => 
-  'displayName' in Component 
+const getComponentName: (Component: DisplayName | Name) => string = Component =>
+  'displayName' in Component
     ? prop('displayName', Component)
     : prop('name', Component);
 
-// getLoggerProps :: Object -> {loggerMessage: String}
-export const getLoggerProps = props => ({ [LOGGER_PROPS_NAME]: getLoggerMessage(props) });
-
-const withLogger = Component => {
-  const Logger = props => {
-    useLogger(getLoggerMessage(props), getComponentName(Component));
+const withLogger = <T extends object>(Component: React.ComponentType<T>) => {
+  const Logger = (props: T) => {
+    useLogger(LOGGER_MESSAGE, getComponentName(Component));
 
     return <Component {...props} />;
-  };
-
-  Logger.propTypes = {
-    [LOGGER_PROPS_NAME]: PropTypes.string.isRequired,
   };
 
   Logger.displayName = `WithLogger(${getComponentName(Component)})`;

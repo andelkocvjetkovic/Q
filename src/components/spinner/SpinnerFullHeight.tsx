@@ -1,9 +1,9 @@
 import Spinner from '@app/components/spinner/Spinner';
-import withLogger, { getLoggerProps } from '@app/utils/logger/withLogger';
+import withLogger from '@app/utils/logger/withLogger';
 
-const SpinnerFullHeight = props => (
+const SpinnerFullHeight = () => (
   <div className='min-h-[length:var(--main-layout-height)] min-w-full flex items-center justify-center'>
-    <Spinner {...getLoggerProps(props)} size={48} />
+    <Spinner size={48} />
   </div>
 );
 

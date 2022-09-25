@@ -10,7 +10,7 @@ const Post = props => {
   const post = useFetch(`posts/${postId}`);
 
   return post.cata({
-    Loading: () => <SpinnerFullHeight {...getLoggerProps(props)} />,
+    Loading: () => <SpinnerFullHeight />,
     Error: e => <div>Something went wrong ${e.message}</div>,
     Success: p => (
       <PostCard
