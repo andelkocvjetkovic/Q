@@ -1,28 +1,27 @@
 import { useParams } from 'react-router-dom';
 import useFetch from '@app/utils/use-fetch/useFetch';
 import PostCard from '@app/components/post-card/PostCard';
-import withLogger, { getLoggerProps } from '@app/utils/logger/withLogger';
+import withLogger from '@app/utils/logger/withLogger';
 import { propId, propTitle, propBody, propUserId } from '@app/utils/props';
 import SpinnerFullHeight from '@app/components/spinner/SpinnerFullHeight';
+import { Post } from '@app/utils/types';
 
-const Post = props => {
-  let { postId } = useParams();
-  const post = useFetch(`posts/${postId}`);
+const Post = () => {
+  const { postId } = useParams();
+  const post = useFetch<Post>(`posts/${postId}`);
 
-  return post.cata({
-    Loading: () => <SpinnerFullHeight />,
-    Error: e => <div>Something went wrong ${e.message}</div>,
-    Success: p => (
+  if (post.kind === 'loading') return <SpinnerFullHeight />;
+  else if (post.kind === 'error') return <div>Something went wrong ${post.error.message}</div>;
+  else
+    return (
       <PostCard
-        key={propId(p)}
-        id={propId(p)}
-        title={propTitle(p)}
-        body={propBody(p)}
-        userId={propUserId(p)}
-        {...getLoggerProps(props)}
+        key={propId(post.data)}
+        id={propId(post.data)}
+        title={propTitle(post.data)}
+        body={propBody(post.data)}
+        userId={propUserId(post.data)}
       />
-    ),
-  });
+    );
 };
 
 export default withLogger(Post);

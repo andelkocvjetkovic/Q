@@ -30,4 +30,11 @@ type Comment = {
   body: string;
 };
 
-export { User, Comment };
+type Post = {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+};
+
+export { User, Comment, Post };
