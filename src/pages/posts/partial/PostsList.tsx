@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
-import withLogger, { getLoggerProps } from '@app/utils/logger/withLogger';
+import withLogger from '@app/utils/logger/withLogger';
 import PostCard from '@app/components/post-card/PostCard';
 import { propId, propTitle, propBody, propUserId } from '@app/utils/props';
+import { Post } from '@app/utils/types';
 
-const PostsList = ({ list, ...rest }) => {
-  let [searchParams] = useSearchParams();
+type PostsListProps = {
+  list: Post[];
+};
+
+const PostsList = ({ list }: PostsListProps) => {
+  const [searchParams] = useSearchParams();
   const isNotFound = searchParams.get('userId') === 'not-found' && list.length === 0;
 
   return (
@@ -24,7 +29,6 @@ const PostsList = ({ list, ...rest }) => {
               body={propBody(p)}
               userId={propUserId(p)}
               showReadmore
-              {...getLoggerProps(rest)}
             />
           ))}
         </div>

@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import usePosts from '@app/utils/use-fetch/usePosts';
 import PostsList from '@app/pages/posts/partial/PostsList';
-import withLogger, { getLoggerProps } from '@app/utils/logger/withLogger';
+import withLogger from '@app/utils/logger/withLogger';
 import SpinnerFullHeight from '@app/components/spinner/SpinnerFullHeight';
 import SearchBar from '@app/components/search-bar/SearchBar';
 import useDebounce from '@app/utils/use-debounce/useDebounce';
@@ -10,27 +10,29 @@ import { useUsers } from '@app/utils/use-fetch/useUsers';
 import { propId } from '@app/utils/props';
 import { matchSorter } from 'match-sorter';
 
-const Posts = props => {
-  let [, setSearchParams] = useSearchParams();
+const Posts = () => {
+  const [, setSearchParams] = useSearchParams();
   const posts = usePosts();
   const users = useUsers();
   const [searchUserName, setSearchUserName] = useState('');
-  const setUsers = useDebounce(
-    userName =>
-      users.cata({
-        Loading: () => setSearchParams({ userId: [] }),
-        Error: () => setSearchParams({ userId: [] }),
-        Success: users => {
-          const matchedUsers = matchSorter(users, userName, { keys: ['name'] }).map(propId);
-          if (userName.trim().length > 0) setSearchParams({ userId: matchedUsers.length > 0 ? matchedUsers : 'not-found' });
-          else {
-            setSearchParams({ userId: [] });
-          }
-          window.scrollTo({ top: 0 });
-        },
-      }),
-    500
-  );
+  const setUsers = useDebounce((userName: string) => {
+    if (users.kind === 'loading') setSearchParams({ userId: [] });
+    else if (users.kind === 'error') setSearchParams({ userId: [] });
+    else {
+      const matchedUsers = matchSorter(users.data, userName, { keys: ['name'] });
+      if (userName.trim().length > 0)
+        setSearchParams({
+          //prettier-ignore
+          userId: matchedUsers.length > 0
+            ? matchedUsers.map(propId).map(String)
+            : 'not-found',
+        });
+      else {
+        setSearchParams({ userId: [] });
+      }
+      window.scrollTo({ top: 0 });
+    }
+  }, 500);
 
   return (
     <div>
@@ -41,16 +43,15 @@ const Posts = props => {
           label='Search by user'
           name='search-by-username'
           placeholder='Start typing user first name or last name'
-          onChange={e => {
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setSearchUserName(e.target.value);
             setUsers(e.target.value);
           }}
-          {...getLoggerProps(props)}
         />
       </div>
       {posts.cata({
-        Loading: () => <SpinnerFullHeight {...getLoggerProps(props)} />,
-        Success: data => <PostsList list={data} {...getLoggerProps(props)} />,
+        Loading: () => <SpinnerFullHeight />,
+        Success: data => <PostsList list={data} />,
         Error: error => <div className='text-2xl text-center p-2'>Something went wrong! {error.message}</div>,
       })}
     </div>
