@@ -1,16 +1,17 @@
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import { lazy } from 'react';
-import withLogger, { getLoggerProps } from '@app/utils/logger/withLogger';
+import withLogger from '@app/utils/logger/withLogger';
 import MainLayout from '@app/components/main-layout/MainLayout';
 import { UserContext } from '@app/utils/use-fetch/useUsers';
 import useFetch from '@app/utils/use-fetch/useFetch';
 import useScrollTop from '@app/utils/use-scroll-top/useScrollTop';
+import { User } from '@app/utils/types';
 
 const PostsLazy = lazy(() => import('@app/pages/posts/Posts'));
 const PostLazy = lazy(() => import('@app/pages/Post'));
 
-const App = props => {
-  const users = useFetch('/users');
+const App = () => {
+  const users = useFetch<User[]>('/users');
 
   useScrollTop();
 
@@ -18,9 +19,9 @@ const App = props => {
     <UserContext.Provider value={users}>
       <Routes>
         <Route path='/' element={<Navigate to='/posts' />} />
-        <Route path='posts' element={<MainLayout {...getLoggerProps(props)} />}>
-          <Route index element={<PostsLazy {...getLoggerProps(props)} />} />
-          <Route path=':postId' element={<PostLazy {...getLoggerProps(props)} />} />
+        <Route path='posts' element={<MainLayout />}>
+          <Route index element={<PostsLazy />} />
+          <Route path=':postId' element={<PostLazy />} />
         </Route>
         <Route
           path='*'

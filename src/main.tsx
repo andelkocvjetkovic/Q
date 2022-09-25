@@ -2,15 +2,14 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from '@app/App';
-import { getLoggerProps, LOGGER_PROPS_NAME } from '@app/utils/logger/withLogger';
 import '@app/index.css';
 
-const LOGGER_MESSAGE = 'Hello from';
+const rootElement = document.getElementById('root') as HTMLElement;
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(rootElement).render(
   <StrictMode>
     <BrowserRouter>
-      <App {...getLoggerProps({ [LOGGER_PROPS_NAME]: LOGGER_MESSAGE })} />
+      <App />
     </BrowserRouter>
   </StrictMode>
 );

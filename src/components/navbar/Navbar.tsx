@@ -1,5 +1,6 @@
 import withLogger from '@app/utils/logger/withLogger';
 import { NavLink } from 'react-router-dom';
+
 const Navbar = () => (
   <nav className='bg-gray-800 flex items-center px-4 py-2'>
     <NavLink

@@ -15,7 +15,8 @@ const Posts = () => {
   const posts = usePosts();
   const users = useUsers();
   const [searchUserName, setSearchUserName] = useState('');
-  const setUsers = useDebounce((userName: string) => {
+
+  const setUsers = useDebounce<string, void>(userName => {
     if (users.kind === 'loading') setSearchParams({ userId: [] });
     else if (users.kind === 'error') setSearchParams({ userId: [] });
     else {
@@ -49,11 +50,9 @@ const Posts = () => {
           }}
         />
       </div>
-      {posts.cata({
-        Loading: () => <SpinnerFullHeight />,
-        Success: data => <PostsList list={data} />,
-        Error: error => <div className='text-2xl text-center p-2'>Something went wrong! {error.message}</div>,
-      })}
+      {posts.kind === 'loading' && <SpinnerFullHeight />}
+      {posts.kind === 'error' && <div className='text-2xl text-center p-2'>Something went wrong! {posts.error.message}</div>}
+      {posts.kind === 'success' && <PostsList list={posts.data} />}
     </div>
   );
 };
