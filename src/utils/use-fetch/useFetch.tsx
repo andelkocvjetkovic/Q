@@ -19,20 +19,34 @@ export interface AsyncDataError {
 
 export type AsyncData<T> = AsyncDataLoading | AsyncDataError | AsyncDataSuccess<T>;
 
+const createAsyncSuccess = <T,>(data: T): AsyncDataSuccess<T> => ({
+  kind: 'success',
+  data,
+});
+
+const createAsyncError = (error: Error): AsyncDataError => ({
+  kind: 'error',
+  error,
+});
+
+const asyncDataLoading: AsyncDataLoading = {
+  kind: 'loading',
+};
+
 const useFetch = <T extends object>(uri: string) => {
-  const [asyncData, setAsyncData] = useState<AsyncData<T>>({ kind: 'loading' });
+  const [asyncData, setAsyncData] = useState<AsyncData<T>>(asyncDataLoading);
 
   useEffect(() => {
     let isCanceled = false;
-    setAsyncData({ kind: 'loading' });
+    setAsyncData(asyncDataLoading);
     ApiActionTask<T>(uri)().then(x => {
       if (!isCanceled)
         pipe(
           x,
           E.map(prop('data')),
           E.fold(
-            e => setAsyncData({ kind: 'error', error: e }),
-            data => setAsyncData({ kind: 'success', data })
+            e => setAsyncData(createAsyncError(e)),
+            data => setAsyncData(createAsyncSuccess(data))
           )
         );
     });
