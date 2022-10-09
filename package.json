@@ -23,6 +23,7 @@
     "autoprefixer": "10.4.8",
     "axios": "0.27.2",
     "daggy": "1.5.0",
+    "fluture": "^14.0.0",
     "folktale": "2.3.2",
     "fp-ts": "2.12.3",
     "match-sorter": "6.3.1",

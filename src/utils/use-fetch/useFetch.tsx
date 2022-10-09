@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { prop } from 'ramda';
+import { fold } from 'fp-ts/TaskEither';
+import * as E from 'fp-ts/Either';
 import { ApiActionTask } from '@app/utils/use-fetch/api';
+import { prop } from 'ramda';
+import { pipe } from 'fp-ts/function';
 
 export interface AsyncDataSuccess<T> {
   kind: 'success';
@@ -20,17 +23,21 @@ const useFetch = <T extends object>(uri: string) => {
   const [asyncData, setAsyncData] = useState<AsyncData<T>>({ kind: 'loading' });
 
   useEffect(() => {
+    let isCanceled = false;
     setAsyncData({ kind: 'loading' });
-    const task = ApiActionTask(uri)
-      .map(prop('data'))
-      .run()
-      .listen({
-        onCancelled: () => null, // TODO handle canceled fetch
-        onResolved: (b: T) => setAsyncData({ kind: 'success', data: b }),
-        onRejected: (e: Error) => setAsyncData({ kind: 'error', error: e }),
-      });
+    ApiActionTask<T>(uri)().then(x => {
+      if (!isCanceled)
+        pipe(
+          x,
+          E.map(prop('data')),
+          E.fold(
+            e => setAsyncData({ kind: 'error', error: e }),
+            data => setAsyncData({ kind: 'success', data })
+          )
+        );
+    });
     return () => {
-      task.cancel();
+      isCanceled = true;
     };
   }, [uri]);
 
