@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { fold } from 'fp-ts/TaskEither';
 import * as E from 'fp-ts/Either';
 import { ApiActionTask } from '@app/utils/use-fetch/api';
 import { prop } from 'ramda';
